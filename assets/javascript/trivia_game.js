@@ -95,13 +95,18 @@ var TriviaGame =
     var q_idx = this.questions.indexOf(next_q);
     this.questions[q_idx].used = true;
 
+    // display the question
     this.d_question.text(next_q.question);
+
+    // build array of answers
     for (i = 0; i < next_q.wrong.length; ++i)
     {
       answers.push(next_q.wrong[i]);
     }
     answers = shuffle(answers);
     console.log("shuffled answers: ", answers);
+
+    // display the answers
     for (i = 0; i < answers.length; ++i)
     {
       // make the list of answers for the card
