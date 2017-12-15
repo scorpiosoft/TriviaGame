@@ -4,12 +4,21 @@ function Question (question, answer, wrong1, wrong2, wrong3)
   this.question = question;
   this.answer = answer;
   this.wrong = [ wrong1, wrong2, wrong3 ];
-  this.picked = false;
+  this.used = false;
 }
 
 // The Trivia Game Object
 var TriviaGame =
 {
+  // DOM elements to update, jQuery handles
+  d_trivia:          $("#trivia"),
+  d_game_card:       $("#game_card"),
+  d_countdown:       $("#countdown"),
+  d_question:        $("#question"),
+  d_answer_list:     $("#answer_list"),
+  d_question_count:  $("#question_count"),
+  d_progress:        $("#progress"),
+  // array of Question Objects
   questions:
   [
     new Question("In which year was V-E Day celebrated?", "1945", "1944", "1954", "1955"),
@@ -69,11 +78,34 @@ var TriviaGame =
   },
   end_game: function ()
   {
-
+    for (var i = 0; i < this.questions.length; ++i)
+    {
+      this.questions[i].used = false;
+    }
   },
   next_question: function ()
   {
+    var i;
+    var unused_questions = this.questions.filter(q => q.used != true);
+    var random_index = Math.floor(Math.random() * unused_questions.length);
+    var next_q = unused_questions[random_index];
+    var answers = [next_q.answer];
 
+    // mark this question used
+    var q_idx = this.questions.indexOf(next_q);
+    this.questions[q_idx].used = true;
+
+    this.d_question.text(next_q.question);
+    for (i = 0; i < next_q.wrong.length; ++i)
+    {
+      answers.push(next_q.wrong[i]);
+    }
+    answers = shuffle(answers);
+    console.log("shuffled answers: ", answers);
+    for (i = 0; i < answers.length; ++i)
+    {
+      // make the list of answers for the card
+    }
   },
 }
 
