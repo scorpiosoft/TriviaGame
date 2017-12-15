@@ -21,7 +21,7 @@ h3
   margin-top: 20px;
 }
 
-p.log
+p
 {
   margin-top: 0;
   margin-bottom: 0;
@@ -33,11 +33,9 @@ progress
   width: 100%;
 }
 
-.log,
 .instructions
 {
-  background-color: rgba(255,255,255,0.15);
-  font-size: 20px;
+  background-color: rgba(44,44,44,0.15);
 }
 
 .background
