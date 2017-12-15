@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fantasy Brawl</title>
+  <!-- bootstrap stylesheet -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <!-- google fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Frijole|Archivo+Black" rel="stylesheet">
+  <!-- local stylesheet -->
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+</head>
+<body id="FantasyBrawl" class="brawl_back">
+
+  <!-- Header -->
+  <header>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col text-center">
+          <h1>Fantasy Brawl</h1>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container-fluid">
+    <!-- New Game Combatant Pool / Enemy Pool -->
+    <div class="row">
+      <div class="col">
+        <h3>Combatant Pool</h3>
+      </div>
+    </div>
+    <!-- actual combatant cards -->
+    <div class="row">
+      <div id="pool" class="col">
+      </div>
+    </div>
+    <!-- Combat Zone -->
+    <div class="row">
+      <div id="combat_header" class="col">
+        <h3 class="float-left mr-5">Combat Zone</h3>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Hero float-left -->
+      <!-- Enemy float-right-->
+      <div id="combat_zone" class="col">
+      </div>
+      <!-- Begin Combat Button -->
+    </div>
+    <!-- Combat Log -->
+    <div class="row">
+      <div class="col">
+        <h3>Combat Log</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div id="combat_log" class="col">
+      </div>
+    </div>
+    <!-- Combat Log -->
+    <div class="row">
+      <div class="col">
+        <h3>Instructions</h3>
+        <p class="instructions">Select a combatant; this combatant becomes your hero and the other three combatants will automatically become your enemies.  Next, one at a time, select an enemy.  Soing so will move the selected enemy into the Combat Zone with you.  Click the [Attack] button to fight the enemy.  Repeat enemy selection and attack them until you either win or lose.</p>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="assets/javascript/fantasy_brawl.js"></script>
+
+</body>
+</html>
