@@ -2,7 +2,13 @@
 {
   color: #331111;
   text-shadow: 1px 1px #ddd;
-  font-family: 'Frijole', cursive;
+  font-family: 'Archivo Black', sans-serif;
+}
+
+h1,h2,h3,h4,h5
+{
+  /*font-family: 'Pirata One', cursive;*/
+  font-family: 'UnifrakturCook', cursive;
 }
 
 h1
@@ -30,12 +36,11 @@ progress
 .log,
 .instructions
 {
-  font-family: 'Archivo Black', sans-serif;
   background-color: rgba(255,255,255,0.15);
   font-size: 20px;
 }
 
-.brawl_back
+.background
 {
   background-image: url("../images/castle-2596885_960_720.jpg");
   background-repeat: no-repeat;
@@ -44,17 +49,7 @@ progress
   background-size: cover;
 }
 
-.hero_back
+.card_background
 {
   background-color: rgba(255,255,255,0.33);
-}
-
-.enemy_back
-{
-  background-color: rgba(255,0,0,0.25);
-}
-
-.reset_back
-{
-  background-color: none;
 }
