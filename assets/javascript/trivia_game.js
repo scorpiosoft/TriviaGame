@@ -40,7 +40,7 @@ var TriviaGame =
     new Question("What was the name of the galleon in which Sir Francis Drake circumnavigated the globe between 1577 and 1580?", "The Golden Hind", "Whydah", "Ark Royal", "The Batavia"),
     new Question("Who succeeded George Washington as President of the United States?", "John Adams", "Thomas Jefferson", "James Madison", "Andrew Jackson"),
     new Question("How was New York known prior to 1664?", "New Amsterdam", "New Berlin", "New London", "New Paris"),
-    new Question("Which famous German fighter pilot was shot down and killed on 21st April 1918?", "The Red Baron", "Werner Voss", "Lothar von Richthofen", "Kurt Wolff"),
+    new Question("Which famous German fighter pilot was shot down and killed on 21st April 1918?", "Manfred von Richthofen", "Werner Voss", "Lothar von Richthofen", "Kurt Wolff"),
     new Question("Who was President of the United States when the National Prohibition Act was passed in 1919?", "Woodrow Wilson", "Grover Cleveland", "Theodore Roosevelt", "Herbert Hoover"),
     new Question("In which year was Nelson Mandela released from prison?", "1990", "1991", "1992", "1993"),
     new Question("Who succeeded Richard III as King of England in 1485?", "Henry VII", "Edward IV", "William III", "George II"),
@@ -57,4 +57,47 @@ var TriviaGame =
     new Question("In which year did American athlete Jesse Owens win four gold medals at the Berlin Olympics?", "1936", "1928", "1932", "1924"),
     new Question("Which is the oldest university in England?", "Oxford", "Cambridge", "Warwick", "Manchester"),
   ],
+  started: false,
+  right:   0,
+  wrong:   0,
+  count:   0,
+  end:     10,
+  time:    10,
+  start_game: function ()
+  {
+
+  },
+  end_game: function ()
+  {
+
+  },
+  next_question: function ()
+  {
+
+  },
+}
+
+//
+// Utility Functions
+//
+
+// take an array and shuffle it's members
+function shuffle(array)
+{
+  var cur_index = array.length;
+  var temp, random_index;
+
+  // while there remain elements to shuffle
+  while (0 !== cur_index)
+  {
+    // Pick a remaining element
+    random_index = Math.floor(Math.random() * cur_index);
+    cur_index -= 1;
+
+    // swap it with the current element
+    temp = array[cur_index];
+    array[cur_index] = array[random_index];
+    array[random_index] = temp;
+  }
+  return array;
 }
