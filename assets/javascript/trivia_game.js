@@ -91,7 +91,7 @@ var TriviaGame =
   },
   display_start: function ()
   {
-    var start = $('');
+    var start = $('<div class="d-flex justify-content-center align-self-center"><button class="btn start button_background">Start Game</button></div>');
     this.d_trivia_root.empty();
     this.d_trivia_root.append(start);
   },
@@ -207,6 +207,12 @@ var TriviaGame =
 }
 
 //
+// Mainline Code
+//
+
+TriviaGame.display_start();
+
+//
 // Event Functions
 //
 
@@ -222,6 +228,14 @@ TriviaGame.d_trivia_root.on('click', 'li.answer', function()
   } else {
     TriviaGame.wrong();
   }
+});
+
+// Click function for the start buttons
+TriviaGame.d_trivia_root.on('click', 'button.start', function()
+{
+  console.log("Start clicked");
+
+  TriviaGame.start_game();
 });
 
 //
