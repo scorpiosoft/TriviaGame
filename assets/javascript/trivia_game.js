@@ -68,6 +68,7 @@ var TriviaGame =
     new Question("https://media.giphy.com/media/rGd96FmvAfymY/giphy.gif", "In which year did American athlete Jesse Owens win four gold medals at the Berlin Olympics?", "1936", "1928", "1932", "1924"),
     new Question("https://media.giphy.com/media/1HIDul5cC5qcU/giphy.gif", "Which is the oldest university in England?", "Oxford", "Cambridge", "Warwick", "Manchester"),
   ],
+  // attributes to hold the state of the game
   cur_question:  null,
   started:       false,
   correct_count: 0,
@@ -75,12 +76,14 @@ var TriviaGame =
   quiz_count:    0,
   end_count:     10,
   time:          10,
+  // method to start the game
   start_game: function ()
   {
     this.correct_count = this.wrong_count = this.quiz_count = 0;
     this.cur_question = null;
     this.display_main();
   },
+  // method to end the game
   end_game: function ()
   {
     for (var i = 0; i < this.questions.length; ++i)
@@ -89,12 +92,14 @@ var TriviaGame =
     }
     this.display_end();
   },
+  // method to display the [Start] button
   display_start: function ()
   {
     var start = $('<div class="d-flex justify-content-center align-self-center"><button class="btn start button_background">Start Game</button></div>');
     this.d_trivia_root.empty();
     this.d_trivia_root.append(start);
   },
+  // method to display the main game content
   display_main: function ()
   {
     var q_and_a = $('<h2 id="question" class="text-center">Question</h2>'
@@ -107,6 +112,7 @@ var TriviaGame =
     this.d_answer_list = $("#answer_list");
     this.next_question();
   },
+  // method to display the result of the user's choice
   display_result: function (msg, gif)
   {
     var gif = $('<img>',
@@ -132,12 +138,14 @@ var TriviaGame =
       }
     }, 5000); // 5 second timer
   },
+  // method to display the end of game wrap-up
   display_end: function ()
   {
     var end = $('');
     this.d_trivia_root.empty();
     this.d_trivia_root.append(end);
   },
+  // method to generate and display the next question
   next_question: function ()
   {
     var i;
@@ -180,12 +188,14 @@ var TriviaGame =
     this.d_progress.val(this.quiz_count);
     this.quiz_count++;
   },
+  // method to handle a correct answer
   correct: function ()
   {
     console.log("correct");
     this.correct_count++;
     this.display_result("Correct!", this.cur_question.gif);
   },
+  // method to handle a wrong answer
   wrong: function ()
   {
     console.log("wrong, correct was: ", this.cur_question.answer);
