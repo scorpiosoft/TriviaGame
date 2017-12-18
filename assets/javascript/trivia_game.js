@@ -39,7 +39,7 @@ var TriviaGame =
     new Question("https://media.giphy.com/media/GOsq7QnYlahag/giphy.gif", "Who was President of the United States when Neil Armstrong first set foot upon the moon?", "Richard Nixon", "John F. Kennedy", "Lyndon B. Johnson", "Gerald Ford"),
     new Question("https://media.giphy.com/media/kyFVqaZgHatgc/giphy.gif", "Which is NOT one of the seven Wonders of the Ancient World?", "Machu Picchu", "Lighthouse of Alexandria", "Mausoleum at Halicarnassus", "Statue of Zeus at Olympia"),
     new Question("https://media.giphy.com/media/l4FGJzg4LOdhyJmIE/giphy.gif", "In which century was the Statue of Liberty dedicated to the United States as a gift from France?", "19th century", "17th century", "18th century", "20th century"),
-    new Question("https://media.giphy.com/media/Yp2ZhmZ1qwTXq/giphy.gif", "Who or what is the ‘Flying Dutchman’?", "A ghost ship/the captain of the ship", "Johann Hessenlink (WWI pilot)", "Bram van der Stok (WWII pilot)", "Amsterdam (Ship-of-the-Line"),
+    new Question("https://media.giphy.com/media/Yp2ZhmZ1qwTXq/giphy.gif", "Who or what is the ‘Flying Dutchman’?", "A ghost ship/the captain of the ship", "Johann Hessenlink (WWI pilot)", "Bram van der Stok (WWII pilot)", "Amsterdam (Ship-of-the-Line)"),
     new Question("https://media.giphy.com/media/26BkMklrnzsWI5tfi/giphy.gif", "Who was the first person to complete a solo flight across the Atlantic Ocean?", "Charles A. Lindbergh", "Amelia Earhart", "Richard Byrd", "Ludwik Idzikowski"),
     new Question("https://media.giphy.com/media/iFsoisHI6zP2M/giphy.gif", "Which American battle is sometimes referred to as Custer’s Last Stand?", "Battle of the Little Bighorn", "Battle of Bull Run", "Battle of Antietam", "Battle of Gettysburg"),
     new Question("https://media.giphy.com/media/w91gk3uIgIVNu/giphy.gif", "Which is the only one of the Seven Wonders of the Ancient World to still be standing?", "The Great Pyramid at Giza", "The Hanging Gardens of Babylon", "The Temple of Artemis at Ephesus", "The Colossus of Rhodes"),
@@ -73,13 +73,14 @@ var TriviaGame =
   started:       false,
   correct_count: 0,
   wrong_count:   0,
+  timeout_count: 0,
   quiz_count:    0,
   end_count:     10,
   time:          10,
   // method to start the game
   start_game: function ()
   {
-    this.correct_count = this.wrong_count = this.quiz_count = 0;
+    this.correct_count = this.wrong_count = this.timeout_count = this.quiz_count = 0;
     this.cur_question = null;
     this.display_main();
   },
@@ -120,6 +121,7 @@ var TriviaGame =
           id:     'the_gif',
           src:    gif,
           width:  '50%',
+          height: 'auto',
         });
     var result = $('<p class="text-center">'+msg+'</p><div id="gif_div" class="d-flex justify-content-center mt-2"></div>');
     this.d_trivia_root.empty();
@@ -141,9 +143,17 @@ var TriviaGame =
   // method to display the end of game wrap-up
   display_end: function ()
   {
-    var end = $('');
+    var end = $('<div class="d-flex justify-content-center align-self-center"><h2>Quiz Complete!</h2></div>'
+          +'<div class="d-flex justify-content-center align-self-center"><p>Correct Answers: '+this.correct_count+'</p></div>'
+          +'<div class="d-flex justify-content-center align-self-center"><p>Wrong Answers: '+this.wrong_count+'</p></div>'
+          +'<div class="d-flex justify-content-center align-self-center"><p>Unanswered: '+this.timeout_count+'</p></div>'
+          +'<div class="d-flex justify-content-center align-self-center"><button class="btn start button_background">Start New Game</button></div>'
+        );
     this.d_trivia_root.empty();
     this.d_trivia_root.append(end);
+    // update the progress too
+    this.d_question_count.text(this.quiz_count+'/'+this.end_count);
+    this.d_progress.val(this.quiz_count);
   },
   // method to generate and display the next question
   next_question: function ()
@@ -252,7 +262,7 @@ TriviaGame.d_trivia_root.on('click', 'button.start', function()
 // Utility Functions
 //
 
-// take an array and shuffle it's members
+// take an array and shuffle it's items
 function shuffle(array)
 {
   var cur_index = array.length;
