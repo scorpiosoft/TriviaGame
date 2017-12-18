@@ -67,6 +67,7 @@ var TriviaGame =
     new Question("https://media.giphy.com/media/rGd96FmvAfymY/giphy.gif", "In which year did American athlete Jesse Owens win four gold medals at the Berlin Olympics?", "1936", "1928", "1932", "1924"),
     new Question("https://media.giphy.com/media/1HIDul5cC5qcU/giphy.gif", "Which is the oldest university in England?", "Oxford", "Cambridge", "Warwick", "Manchester"),
   ],
+  cur_question:  null,
   started: false,
   right:   0,
   wrong:   0,
@@ -75,7 +76,8 @@ var TriviaGame =
   time:    10,
   start_game: function ()
   {
-
+    this.right = this.wrong = this.count = 0;
+    this.cur_question = null;
   },
   end_game: function ()
   {
@@ -87,14 +89,21 @@ var TriviaGame =
   next_question: function ()
   {
     var i;
+    // get all unused questions (a subset copy of the master list of questions)
     var unused_questions = this.questions.filter(q => q.used != true);
+    // get random number
     var random_index = Math.floor(Math.random() * unused_questions.length);
+    // get the random unused question
     var next_q = unused_questions[random_index];
+    // assign first element of the answers array
     var answers = [next_q.answer];
 
-    // mark this question used
+    // get the random question's index in the master list
     var q_idx = this.questions.indexOf(next_q);
+    // mark this question used in the master list
     this.questions[q_idx].used = true;
+    // and assign it to the current question
+    this.cur_question = next_q;
 
     // display the question
     this.d_question.text(next_q.question);
@@ -125,6 +134,12 @@ var TriviaGame =
 TriviaGame.d_answer_list.on('click', 'li.answer', function()
 {
   console.log("Answer selected:", $(this).text());
+
+  // check if the answer is correct
+  if ($(this).text() === TriviaGame.cur_answer.answer)
+  {
+    x
+  }
 });
 
 //
