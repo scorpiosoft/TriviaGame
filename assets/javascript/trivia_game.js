@@ -111,7 +111,7 @@ var TriviaGame =
     for (i = 0; i < answers.length; ++i)
     {
       // create a jQuery handle for the list item, then append it to the list
-      var item = $('<li class="list-group-item answer text-center card_background">'+answers[i]+'</li>');
+      var item = $('<li class="list-group-item answer text-center card_background"><p>'+answers[i]+'</p></li>');
       this.d_answer_list.append(item);
     }
   },
@@ -122,21 +122,10 @@ var TriviaGame =
 //
 
 // Click function for the answers
-// $(".answer").on("click", function()
-TriviaGame.d_answer_list.on('click', 'answer', function()
+TriviaGame.d_answer_list.on('click', 'li.answer', function()
 {
-  console.log("Answer selected:", this);
+  console.log("Answer selected:", $(this).text());
 });
-
-// $(".answer").click(function()
-// {
-//   console.log("Answer selected:", this);
-// });
-
-// $(".answer").bind("click", function()
-// {
-//   console.log("Answer selected:", this);
-// });
 
 //
 // Utility Functions

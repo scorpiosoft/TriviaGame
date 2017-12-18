@@ -1,8 +1,8 @@
 *
 {
-  color: #331111;
-  text-shadow: 1px 1px #ddd;
-  font-family: 'Archivo Black', sans-serif;
+  color: #570b9c;
+  text-shadow: 1px 1px #d4adf9;
+  font-family: 'Arimo', sans-serif;
 }
 
 h1
@@ -12,7 +12,7 @@ h1
 
 h2,h3,h4,h5
 {
-  font-family: 'Pirata One', cursive;
+  font-family: 'Kalam', cursive;
 }
 
 h1
@@ -30,6 +30,7 @@ p
   margin-top: 0;
   margin-bottom: 0;
   line-height: 100%;
+  font-size: 24px;
 }
 
 progress
@@ -53,7 +54,6 @@ progress
 
 .card_background
 {
-  /*background-color: rgba(255,255,255,0.33);*/
   background-color: rgba(44,44,44,0.33);
 }
 
