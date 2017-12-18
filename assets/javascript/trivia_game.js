@@ -70,17 +70,16 @@ var TriviaGame =
   ],
   cur_question:  null,
   started:       false,
-  right_count:   0,
+  correct_count: 0,
   wrong_count:   0,
   quiz_count:    0,
   end:           10,
   time:          10,
   start_game: function ()
   {
-    this.right_count = this.wrong_count = this.quiz_count = 0;
+    this.correct_count = this.wrong_count = this.quiz_count = 0;
     this.cur_question = null;
     this.display_main();
-    this.next_question();
   },
   end_game: function ()
   {
@@ -105,12 +104,20 @@ var TriviaGame =
     this.d_trivia_root.append(q_and_a);
     this.d_question = $("#question");
     this.d_answer_list = $("#answer_list");
+    this.next_question();
   },
-  display_result: function ()
+  display_result: function (msg, gif)
   {
-    var result = $('');
+    var gif = $('<img>',
+        {
+          id:     'the_gif',
+          src:    gif,
+          width:  '50%',
+        });
+    var result = $('<p class="text-center">'+msg+'</p><div id="gif_div" class="d-flex justify-content-center mt-2"></div>');
     this.d_trivia_root.empty();
     this.d_trivia_root.append(result);
+    $('#gif_div').append(gif);
   },
   display_end: function ()
   {
@@ -163,10 +170,26 @@ var TriviaGame =
   correct: function ()
   {
     console.log("correct");
+    this.correct_count++;
+    this.display_result("Correct!", this.cur_question.gif);
   },
   wrong: function ()
   {
     console.log("wrong, correct was: ", this.cur_question.answer);
+    this.wrong_count++;
+
+    // query Giphy for a random "failure" GIF
+    var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=2NSUkoto46BJKC6mgko4RKD1vqgESOCX&tag=failure&rating=g";
+
+    $.ajax(
+    {
+      url: queryURL,
+      method: 'GET'
+    }).done(function(response)
+    {
+      console.log(response);
+      TriviaGame.display_result("Incorrect.  Correct answer was, "+TriviaGame.cur_question.answer, response.data.image_original_url);
+    });
   },
 }
 
