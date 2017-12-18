@@ -110,12 +110,33 @@ var TriviaGame =
     // display the answers
     for (i = 0; i < answers.length; ++i)
     {
-      // Model Item:  <li class="list-group-item">Cras justo odio</li>
-      var item = $('<li class="list-group-item answer text-center">'+answers[i]+'</li>');
+      // create a jQuery handle for the list item, then append it to the list
+      var item = $('<li class="list-group-item answer text-center card_background">'+answers[i]+'</li>');
       this.d_answer_list.append(item);
     }
   },
 }
+
+//
+// Event Functions
+//
+
+// Click function for the answers
+// $(".answer").on("click", function()
+TriviaGame.d_answer_list.on('click', 'answer', function()
+{
+  console.log("Answer selected:", this);
+});
+
+// $(".answer").click(function()
+// {
+//   console.log("Answer selected:", this);
+// });
+
+// $(".answer").bind("click", function()
+// {
+//   console.log("Answer selected:", this);
+// });
 
 //
 // Utility Functions
