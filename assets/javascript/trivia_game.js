@@ -149,6 +149,7 @@ var TriviaGame =
     console.log("shuffled answers: ", answers);
 
     // display the answers
+    this.d_answer_list.empty();
     for (i = 0; i < answers.length; ++i)
     {
       // create a jQuery handle for the list item, then append it to the list
@@ -161,7 +162,7 @@ var TriviaGame =
   },
   correct: function ()
   {
-    console.log("corrct");
+    console.log("correct");
   },
   wrong: function ()
   {
