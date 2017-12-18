@@ -12,11 +12,12 @@ function Question (gif, question, answer, wrong1, wrong2, wrong3)
 var TriviaGame =
 {
   // DOM elements to update, jQuery handles
-  d_trivia:          $("#trivia"),
+  d_trivia:          $("#Trivia"),
+  d_trivia_root:     $('#trivia_root'),
   d_game_card:       $("#game_card"),
   d_countdown:       $("#countdown"),
-  d_question:        $("#question"),
-  d_answer_list:     $("#answer_list"),
+  d_question:        "",
+  d_answer_list:     "",
   d_question_count:  $("#question_count"),
   d_progress:        $("#progress"),
   // array of Question Objects
@@ -56,7 +57,7 @@ var TriviaGame =
     new Question("https://media.giphy.com/media/ESu18lTvy3ilW/giphy.gif", "Who succeeded Richard III as King of England in 1485?", "Henry VII", "Edward IV", "William III", "George II"),
     new Question("https://media.giphy.com/media/5o74cnmOBrqdW/giphy.gif", "Who was the oldest person to assume office as the President of the United States?", "Ronald Reagan", "George Bush", "John Quincy Adams", "William Henry Harrison"),
     new Question("https://media.giphy.com/media/LpwqZsLlxBvXO/giphy.gif", "Who was the first leader of the Soviet Union?", "Vladimir Lenin", "Josef Stalin", "Nikita Khrushchev", "Alexei Rykov"),
-    new Question("https://media2.giphy.com/media/7jzn989vTILZe/giphy.gif", "Who commissioned the Arc de Triomphe?", "Napoleon I", "Charles de Gaulle", "Louis XVI", "Napoleon III"),
+    new Question("https://media.giphy.com/media/7jzn989vTILZe/giphy.gif", "Who commissioned the Arc de Triomphe?", "Napoleon I", "Charles de Gaulle", "Louis XVI", "Napoleon III"),
     new Question("https://media.giphy.com/media/IxNZYC3OkRClW/giphy.gif", "Abraham Lincoln was assassinated in 1865 in Ford’s Theatre in which U.S. city?", "Washington D.C.", "Philadelphia, PA", "New York, NY", "Baltimore, MD"),
     new Question("https://media.giphy.com/media/sbzAvZYuemmvS/giphy.gif", "Which U.S. naval base was attacked by the Imperial Japanese Navy on December 7th 1941?", "Pearl Harbor", "Midway", "Guam", "Guadalcanal"),
     new Question("https://media.giphy.com/media/MDAPUghEZNRUk/giphy.gif", "In which year was the assassination of Archduke Ferdinand?", "1914", "1917", "1936", "1939"),
@@ -68,16 +69,18 @@ var TriviaGame =
     new Question("https://media.giphy.com/media/1HIDul5cC5qcU/giphy.gif", "Which is the oldest university in England?", "Oxford", "Cambridge", "Warwick", "Manchester"),
   ],
   cur_question:  null,
-  started: false,
-  right:   0,
-  wrong:   0,
-  count:   0,
-  end:     10,
-  time:    10,
+  started:       false,
+  right_count:   0,
+  wrong_count:   0,
+  quiz_count:    0,
+  end:           10,
+  time:          10,
   start_game: function ()
   {
-    this.right = this.wrong = this.count = 0;
+    this.right_count = this.wrong_count = this.quiz_count = 0;
     this.cur_question = null;
+    this.display_main();
+    this.next_question();
   },
   end_game: function ()
   {
@@ -85,6 +88,35 @@ var TriviaGame =
     {
       this.questions[i].used = false;
     }
+  },
+  display_start: function ()
+  {
+    var start = $('');
+    this.d_trivia_root.empty();
+    this.d_trivia_root.append(start);
+  },
+  display_main: function ()
+  {
+    var q_and_a = $('<h2 id="question" class="text-center">Question</h2>'
+          +'<ul id="answer_list" class="list-group list-group-flush">'
+          +'</ul>'
+        );
+    this.d_trivia_root.empty();
+    this.d_trivia_root.append(q_and_a);
+    this.d_question = $("#question");
+    this.d_answer_list = $("#answer_list");
+  },
+  display_result: function ()
+  {
+    var result = $('');
+    this.d_trivia_root.empty();
+    this.d_trivia_root.append(result);
+  },
+  display_end: function ()
+  {
+    var result = $('');
+    this.d_trivia_root.empty();
+    this.d_trivia_root.append(result);
   },
   next_question: function ()
   {
@@ -123,6 +155,17 @@ var TriviaGame =
       var item = $('<li class="list-group-item answer text-center card_background"><p>'+answers[i]+'</p></li>');
       this.d_answer_list.append(item);
     }
+    this.d_question_count.text(this.quiz_count+'/'+this.end);
+    this.d_progress.val(this.quiz_count);
+    this.quiz_count++;
+  },
+  correct: function ()
+  {
+    console.log("corrct");
+  },
+  wrong: function ()
+  {
+    console.log("wrong, correct was: ", this.cur_question.answer);
   },
 }
 
@@ -131,14 +174,16 @@ var TriviaGame =
 //
 
 // Click function for the answers
-TriviaGame.d_answer_list.on('click', 'li.answer', function()
+TriviaGame.d_trivia_root.on('click', 'li.answer', function()
 {
   console.log("Answer selected:", $(this).text());
 
   // check if the answer is correct
-  if ($(this).text() === TriviaGame.cur_answer.answer)
+  if ($(this).text() === TriviaGame.cur_question.answer)
   {
-    x
+    TriviaGame.correct();
+  } else {
+    TriviaGame.wrong();
   }
 });
 

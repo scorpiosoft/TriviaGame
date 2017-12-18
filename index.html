@@ -19,19 +19,15 @@
   <div class="container">
     <div class="row">
       <div class="col">
-        <!-- the game itself will live inside a giant card -->
-        <div id="game_card" class="card m-5 card_background"> <!-- style="width: 80%"> -->
+        <div id="game_card" class="card m-5 card_background">
           <div class="card-header">
             <h1 class="card-title text-center">Pub Trivia : History</h1>
           </div>
           <div class="card-body">
             <h5 id="countdown" class="text-center">Time Remaining</h5>
           </div>
-          <div class="card-body">
-            <h2 id="question" class="text-center">Question</h2>
+          <div id="trivia_root"  class="card-body">
           </div>
-          <ul id="answer_list" class="list-group list-group-flush">
-          </ul>
           <div class="card-body">
             <p id="question_count" class="card-text text-center">0/10</p>
             <progress id="progress" value="0" max="10"></progress>
@@ -39,13 +35,6 @@
         </div>
       </div>
     </div>
-
-<!--     <div class="row">
-      <div class="col instructions m-2 p-0">
-        <h3 class="mt-0 p-0">Instructions</h3>
-        <p>Select a combatant; this combatant becomes your hero and the other three combatants will automatically become your enemies.  Next, one at a time, select an enemy.  Soing so will move the selected enemy into the Combat Zone with you.  Click the [Attack] button to fight the enemy.  Repeat enemy selection and attack them until you either win or lose.</p>
-      </div>
-    </div> -->
   </div>
 
   <script type="text/javascript" src="assets/javascript/trivia_game.js"></script>
