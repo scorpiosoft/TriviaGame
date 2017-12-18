@@ -73,7 +73,7 @@ var TriviaGame =
   correct_count: 0,
   wrong_count:   0,
   quiz_count:    0,
-  end:           10,
+  end_count:     10,
   time:          10,
   start_game: function ()
   {
@@ -87,6 +87,7 @@ var TriviaGame =
     {
       this.questions[i].used = false;
     }
+    this.display_end();
   },
   display_start: function ()
   {
@@ -118,12 +119,24 @@ var TriviaGame =
     this.d_trivia_root.empty();
     this.d_trivia_root.append(result);
     $('#gif_div').append(gif);
+
+    // display next question ater a timer
+    setTimeout(function()
+    {
+      // check question count and display next question or end game
+      if (TriviaGame.quiz_count >= TriviaGame.end_count)
+      {
+        TriviaGame.end_game();
+      } else {
+        TriviaGame.display_main();
+      }
+    }, 5000); // 5 second timer
   },
   display_end: function ()
   {
-    var result = $('');
+    var end = $('');
     this.d_trivia_root.empty();
-    this.d_trivia_root.append(result);
+    this.d_trivia_root.append(end);
   },
   next_question: function ()
   {
@@ -163,7 +176,7 @@ var TriviaGame =
       var item = $('<li class="list-group-item answer text-center card_background"><p>'+answers[i]+'</p></li>');
       this.d_answer_list.append(item);
     }
-    this.d_question_count.text(this.quiz_count+'/'+this.end);
+    this.d_question_count.text(this.quiz_count+'/'+this.end_count);
     this.d_progress.val(this.quiz_count);
     this.quiz_count++;
   },
