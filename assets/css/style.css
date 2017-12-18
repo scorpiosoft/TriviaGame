@@ -44,7 +44,7 @@ progress
 
 .background
 {
-  background-image: url("../images/castle-2596885_960_720.jpg");
+  background-image: url("../images/ruins-in-turkey.jpg");
   background-repeat: no-repeat;
   background-position: center center;
   background-attachment: fixed;
@@ -53,5 +53,6 @@ progress
 
 .card_background
 {
-  background-color: rgba(255,255,255,0.33);
+  /*background-color: rgba(255,255,255,0.33);*/
+  background-color: rgba(44,44,44,0.33);
 }

@@ -110,6 +110,7 @@ var TriviaGame =
     for (i = 0; i < answers.length; ++i)
     {
       // make the list of answers for the card
+      // Model Item:  <li class="list-group-item">Cras justo odio</li>
     }
   },
 }
