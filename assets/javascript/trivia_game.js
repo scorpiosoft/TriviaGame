@@ -77,6 +77,8 @@ var TriviaGame =
   quiz_count:    0,
   end_count:     10,
   time:          10,
+  cur_time:      10,
+  h_timer:       null,
   // method to start the game
   start_game: function ()
   {
@@ -87,6 +89,9 @@ var TriviaGame =
   // method to end the game
   end_game: function ()
   {
+    // stop the timer
+    clearInterval(this.h_timer);
+    // reset the questions
     for (var i = 0; i < this.questions.length; ++i)
     {
       this.questions[i].used = false;
@@ -120,7 +125,7 @@ var TriviaGame =
         {
           id:     'the_gif',
           src:    gif,
-          width:  '50%',
+          width:  '33%',
           height: 'auto',
         });
     var result = $('<p class="text-center">'+msg+'</p><div id="gif_div" class="d-flex justify-content-center mt-2"></div>');
@@ -147,7 +152,7 @@ var TriviaGame =
           +'<div class="d-flex justify-content-center align-self-center"><p>Correct Answers: '+this.correct_count+'</p></div>'
           +'<div class="d-flex justify-content-center align-self-center"><p>Wrong Answers: '+this.wrong_count+'</p></div>'
           +'<div class="d-flex justify-content-center align-self-center"><p>Unanswered: '+this.timeout_count+'</p></div>'
-          +'<div class="d-flex justify-content-center align-self-center"><button class="btn start button_background">Start New Game</button></div>'
+          +'<div class="d-flex justify-content-center align-self-center"><button class="btn start button_background mt-2">Start New Game</button></div>'
         );
     this.d_trivia_root.empty();
     this.d_trivia_root.append(end);
@@ -194,9 +199,14 @@ var TriviaGame =
       var item = $('<li class="list-group-item answer text-center card_background"><p>'+answers[i]+'</p></li>');
       this.d_answer_list.append(item);
     }
+    // display the progress
     this.d_question_count.text(this.quiz_count+'/'+this.end_count);
     this.d_progress.val(this.quiz_count);
     this.quiz_count++;
+
+    // lastly, start the interval timer
+    this.cur_time = this.time;
+    this.h_timer = setInterval(this.tick, 1000);
   },
   // method to handle a correct answer
   correct: function ()
@@ -210,19 +220,50 @@ var TriviaGame =
   {
     console.log("wrong, correct was: ", this.cur_question.answer);
     this.wrong_count++;
-
+    this.random_fail("Incorrect.  Correct answer was, "+this.cur_question.answer)
+  },
+  // method to get a random fail GIF
+  // unfortunately, due to the way ajax callbacks work,
+  // this method doubles up duties and also displays the trivia result,
+  // taking a message parameter
+  random_fail: function (msg)
+  {
     // query Giphy for a random "failure" GIF
-    var queryURL = "https://api.giphy.com/v1/gifs/random?api_key=2NSUkoto46BJKC6mgko4RKD1vqgESOCX&tag=failure&rating=g";
-
     $.ajax(
     {
-      url: queryURL,
+      url: "https://api.giphy.com/v1/gifs/random?api_key=2NSUkoto46BJKC6mgko4RKD1vqgESOCX&tag=failure&rating=g",
       method: 'GET'
     }).done(function(response)
     {
       console.log(response);
-      TriviaGame.display_result("Incorrect.  Correct answer was, "+TriviaGame.cur_question.answer, response.data.image_original_url);
+      TriviaGame.display_result(msg, response.data.image_original_url);
     });
+
+  },
+  // callback method for the countdown timer
+  tick: function ()
+  {
+    // sanity check
+    if (TriviaGame.quiz_count >= TriviaGame.end_count)
+    {
+      clearInterval(TriviaGame.h_timer);
+      return false;
+    }
+    // tick down once
+    TriviaGame.cur_time--;
+    // check if zero
+    if (TriviaGame.cur_time <= 0)
+    {
+      // stop the timer
+      clearInterval(TriviaGame.h_timer);
+      // increment timeout count
+      TriviaGame.timeout_count++;
+      // display the result
+      TriviaGame.random_fail("Time ran out!  Correct answer was, "+TriviaGame.cur_question.answer);
+    } else {
+      // display the new time
+      TriviaGame.d_countdown.text("Time Remaining: "+TriviaGame.cur_time);
+    }
   },
 }
 
@@ -241,6 +282,8 @@ TriviaGame.d_trivia_root.on('click', 'li.answer', function()
 {
   console.log("Answer selected:", $(this).text());
 
+  // stop the timer
+  clearInterval(TriviaGame.h_timer);
   // check if the answer is correct
   if ($(this).text() === TriviaGame.cur_question.answer)
   {
@@ -253,8 +296,6 @@ TriviaGame.d_trivia_root.on('click', 'li.answer', function()
 // Click function for the start buttons
 TriviaGame.d_trivia_root.on('click', 'button.start', function()
 {
-  console.log("Start clicked");
-
   TriviaGame.start_game();
 });
 
